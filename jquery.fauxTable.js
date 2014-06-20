@@ -5,7 +5,14 @@
 	}
 	var $window = $(window);
 	$window.resizedEvent();
-
+	if (!Array.prototype.indexOf) {
+		Array.prototype.indexOf = function(obj, start) {
+		     for (var i = (start || 0), j = this.length; i < j; i++) {
+		         if (this[i] === obj) { return i; }
+		     }
+		     return -1;
+		}
+	}
 	$.fn.fauxTable = function( options ){
 		var that = this;
 		var noop = function(){};
@@ -44,7 +51,7 @@
  					var classes = $(this).attr('class' );
  					var allClasses = classes ? $(this).attr('class').split( /\s+/) : [];
  					var selector = [ $(this).prop('tagName') ];
- 					for( var i in allClasses ){
+ 					for( var i = 0; i < allClasses.length; i++ ){
  						if ( allClasses[i] && settings.classesThatCanChange.indexOf( allClasses[i] ) === -1 ){
  							selector.push( allClasses[i]);
  						}
@@ -104,7 +111,7 @@
 		 					var $toAlign = $innerContainer.children( selector );
 		 				}
 		 				// if just a tag name
-		 				if ( selector.indexOf( '.' ) === -1 && selector.indexOf( '#') === -1 ){
+		 				if ( typeof( selector ) === 'string' && selector.indexOf( '.' ) === -1 && selector.indexOf( '#') === -1 ){
 			 				for ( j in cellElements ){
 			 					if ( cellElements[j] !== selector ){
 			 						var thisSelector = cellElements[j];
