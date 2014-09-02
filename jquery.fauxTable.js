@@ -31,12 +31,14 @@
  			var cellElements = [];
  			// for each of the cell's children, add their classes to the array
  			$cells.each( function(){
- 				var $innerContainer = $(this).children( settings.cellInnerSelector );
- 				if( $innerContainer.size() === 0 ){
+
+ 				var $innerContainer = settings.cellInnerSelector ? $(this).children( settings.cellInnerSelector ) : false;
+ 				if( ! $innerContainer || $innerContainer.size() === 0 ){
  					var $toAlign = $(this).children();
  				} else {
  					var $toAlign = $innerContainer.children();
  				}
+ 				$(this).data('toAlign', $toAlign );
  				if ( settings.excludeSelector ){
  					$toAlign = $toAlign.filter( ':not('+settings.excludeSelector+')');
  				}
@@ -67,6 +69,7 @@
 				var lineBreaks = [];
 				var index = 0;
 				var cellHeight = 0;
+				var lastTop = $cells.first().offset().top;
 				$cells.each( function(){
 					if ( $(this).height() > cellHeight ){
 						cellHeight = $(this).height();
@@ -91,18 +94,12 @@
  				for( i in cellElements ){
  					maxHeight = 0;
  					selector = cellElements[i];
-
  					var $toAdjust = $();
  					var lastTop = 0;
  					var index = -1;
  					$cells.each( function(){
  						index++;
-		 				var $innerContainer = $(this).children( settings.cellInnerSelector );
-		 				if( $innerContainer.size() === 0 ){
-		 					var $toAlign = $(this).children( selector );
-		 				} else {
-		 					var $toAlign = $innerContainer.children( selector );
-		 				}
+		 				var $toAlign = $(this).data('toAlign').filter( selector );
 		 				// if just a tag name
 		 				if ( selector.indexOf( '.' ) === -1 && selector.indexOf( '#') === -1 ){
 			 				for ( j in cellElements ){
