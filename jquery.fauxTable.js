@@ -78,7 +78,7 @@
 				$cells.css({ height: cellHeight });
 				$cells.each( function(){
 					var topPos = $(this).offset().top;
-					if ( topPos !== lastTop ){
+					if ( topPos > lastTop ){
 						if ( index !== 0 ){
 							lineBreaks.push( true );
 						} else {
