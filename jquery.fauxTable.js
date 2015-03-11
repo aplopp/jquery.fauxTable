@@ -11,7 +11,7 @@
 		var noop = function(){};
 		var defaults = {
 			cellSelector: '.tb-td',
-			cellInnerSelector: '.inner-container',
+			cellInnerSelector: false,
 			classesThatCanChange: [ 'active' ],
 			excludeSelector: false,
 			beforeResize: noop,
@@ -24,9 +24,8 @@
 		this.each( function(){
 	 		var $container = $(this);
  			var $cells = $(this).children( settings.cellClass );
-
- 			// no cells, stop dead
- 			if ( $cells.size() === 0 ) return;
+ 			// one or fewer cells, stop dead
+ 			if ( $cells.size() <= 1 ) return;
 
  			var cellElements = [];
  			// for each of the cell's children, add their classes to the array
