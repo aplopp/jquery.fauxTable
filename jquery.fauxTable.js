@@ -155,7 +155,7 @@
 		return;
 	}
 	FauxTable.prototype.reinit = function(){
-		$(window).unbind( 'resized-w', this.handleResize );
+		$(window).unbind( 'resized-w.fauxtable', this.handleResize );
 
 		//reset heights
 		$.each( this.cellData, function(i,data){
@@ -168,7 +168,12 @@
 		return this;
 	}
 	FauxTable.prototype.destroy = function(){
-		$(window).unbind( 'resized-w.fauxtable', this.handleResize );
+		for ( i in $(window).data('events')['resized-w'] ){
+			// unbind resize event
+			if ( $(window).data('events')['resized-w'][i].data === this ){
+				$(window).data('events')['resized-w'].splice( i, 1 );
+			}
+		}
 		this.$el.data('fauxtable', null);
 		//reset heights
 		$.each( this.cellData, function(i,data){
