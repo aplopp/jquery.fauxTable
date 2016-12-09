@@ -88,7 +88,6 @@
 			var maxHeightOfElement = 0;
 			$.each( this.cellData, function(i, data){
 	 			var $el = data.$toAlign.filter( selector );
-
 				// if no elements to align, return
 				if ( $el.length === 0 ) return;
 				
@@ -102,13 +101,13 @@
 				}
 				$elementsToAdjust = $elementsToAdjust.add( $el );
 				// if there is a line break on the very next cell
-				if ( this.cellData.length >= (i + 1) || this.cellData[ i + 1 ].lineBreak ){
+				if ( this.cellData.length <= (i + 1) || this.cellData[ i + 1 ].lineBreak ){
 					// adjust heights of this element in previous cells
 					$elementsToAdjust.height( maxHeightOfElement );
 					// clear the maxHeightOfElement
 					maxHeightOfElement = 0;
 					// clear the list of cells to adjust
-					$toAdjust = $(); // and clear
+					$elementsToAdjust = $(); // and clear
 				}
 			}.bind(this));
  		}.bind(this));
