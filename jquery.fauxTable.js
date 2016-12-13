@@ -27,7 +27,7 @@
 			reinit: this.reinit,
 			resize: this.handleResize
 		};
-		$window.bind('resized-w.fauxtable', this, this.handleResize );
+		$window.bind('resized-w.fauxtable resized-init.fauxtable', this, this.handleResize );
 		this.handleResize();
 	}
 	FauxTable.prototype.init = function(){
@@ -154,7 +154,7 @@
 		return;
 	}
 	FauxTable.prototype.reinit = function(){
-		$(window).unbind( 'resized-w.fauxtable', this.handleResize );
+		$(window).unbind( 'resized-init.fauxtable resized-w.fauxtable', this.handleResize );
 
 		//reset heights
 		$.each( this.cellData, function(i,data){
