@@ -4,7 +4,6 @@
 	    return (indexOf >= 0) ? (indexOf + (startpos || 0)) : indexOf;
 	}
 	var $window = $(window);
-	$window.resizedEvent();
 
 	function FauxTable($el, args){
 		this.$el = $el;
@@ -31,6 +30,8 @@
 		this.handleResize();
 	}
 	FauxTable.prototype.init = function(){
+		this.$el.resizedEvent();
+
 		this.cellData = [];
 		this.cellElements = [];
 		this.$cells = this.$el.children( this.settings.cellSelector );
@@ -154,7 +155,7 @@
 		return;
 	}
 	FauxTable.prototype.reinit = function(){
-		$(window).unbind( 'resized-init.fauxtable resized-w.fauxtable', this.handleResize );
+		$this.$el.unbind( 'resized-init.fauxtable resized-w.fauxtable', this.handleResize );
 
 		//reset heights
 		$.each( this.cellData, function(i,data){
@@ -173,6 +174,7 @@
 				$(window).data('events')['resized-w'].splice( i, 1 );
 			}
 		}
+		this.$el.resizedEvent("destroy");
 		this.$el.data('fauxtable', null);
 		//reset heights
 		$.each( this.cellData, function(i,data){
