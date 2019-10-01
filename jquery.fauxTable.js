@@ -57,10 +57,12 @@
 				var selector = [ $(el).prop('tagName') ];
 				for( var i in allClasses ){
 					if ( allClasses[i] && this.settings.classesThatCanChange.indexOf( allClasses[i] ) === -1 ){
-						selector.push( allClasses[i]);
+						if( $.type( allClasses[i] ) === 'string' ){
+							selector.push( allClasses[i]);
+						}
 					}
 				}
-				selector = selector.join( '.' );
+				selector = selector.join( '.' ).toLowerCase();
 				if ( this.cellElements.indexOf( selector ) === -1 ){
 					this.cellElements.push( selector )
 				}
